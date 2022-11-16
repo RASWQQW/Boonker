@@ -1,0 +1,48 @@
+﻿@model Boonker.Data.Models.Book
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+<h3>Are you sure you want to delete this?</h3>
+@using (Html.BeginForm("Delete", "Books", FormMethod.Post))
+{
+    <div class="form-check">
+        <div class="form-group" style="color: white;">
+            <label>Title</label>
+            @Html.TextBoxFor(x => x.Title, new { @class = "form-control", @readonly = "true", @id = "exampleInputEmail1" })
+        </div>
+        <div class="col-form-label" style="color: white;">
+            <label>Author</label>
+            @Html.TextBoxFor(x => x.Author.Name, new { @class = "form-control", @readonly = "true", @id = "exampleInputEmail1" })
+        </div>
+        <div class="col-form-label" style="color: white;">
+            <label>DSCR</label>
+            @Html.TextAreaFor(x => x.DSCR, new { @class = "form-control", @readonly = "true", @id = "exampleInputEmail1" })
+        </div>
+        <div class="col-form-label" style="color: white;">
+            <label>Price</label>
+            @Html.TextBoxFor(x => x.Price, new { @class = "form-control", @readonly = "true", @id = "exampleInputEmail1" })
+        </div>
+        <div class="col-form-label" style="color: white; ">
+            <label>Amount</label>
+            @Html.TextBoxFor(x => x.Amount, new { @class = "form-control", @readonly = "true", @id = "exampleInputEmail1" })
+        </div>
+        <div class="col-form-label" style="color: white;">
+            <label>Favorite</label>
+            @Html.CheckBoxFor(x => x.IsFav, new { @class = "form-check-label", @readonly = "true", @id = "exampleInputEmail1" })
+        </div>
+        <div class="col-form-label" style="color: white;">
+            <label>Image</label>
+            @Html.TextBoxFor(x => x.Img, new { @class = "form-control", @readonly = "true", @id = "exampleInputEmail1" })
+        </div>
+        <div class="col-form-label" style="color: white;">
+            <label>Category</label>
+            @Html.TextBoxFor(x => x.Category, new { @class = "form-control", @readonly = "true", @id = "exampleInputEmail1" })
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </div>
+    </div>
+}

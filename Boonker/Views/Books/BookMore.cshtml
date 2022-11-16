@@ -1,0 +1,149 @@
+﻿@using Boonker.Data.Models;
+@model CommonViewModel
+
+
+<link rel="stylesheet" href="~/assets/css/fontawesome.css">
+<link rel="stylesheet" href="~/assets/css/templatemo-cyborg-gaming.css">
+<link rel="stylesheet" href="~/assets/css/owl.css">
+<link rel="stylesheet" href="~/assets/css/animate.css">
+<link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="page-content">
+
+            <!-- ***** Banner Start ***** -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="main-profile ">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <img src="@Model.books.Img" alt="Book Image" style="border-radius: 23px;">
+                            </div>
+                            <div class="col-lg-4 align-self-center">
+                                <div class="main-info header-text">
+
+                                    @{ if (Model.books.IsFav){
+                                        <span>Liked Book</span>
+                                    }
+                                    else{
+                                        <span>don't Liked</span>
+                                    } }
+
+                                    <h4>@Model.books.Title</h4>
+                                    <h4>Author: @Model.books.Author.Name</h4>
+                                    <p>@Model.books.DSCR.</p>
+                                    <div class="main-border-button">
+                                        <a href="#">Start Live Stream</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 align-self-center">
+                                <ul>
+                                    <li>Price <span>@Model.books.Price.ToString("c")</span></li>
+                                    <li>Amount <span>@Model.books.Amount</span></li>
+                                    <li>Category<span>@Model.books.Category.Name</span></li>
+                                    <li>Views<span>@Model.books.Views</span></li>
+                                    @*<li>Clips <span>29</span></li>*@
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="clips">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="heading-section">
+                                                <h4><em>Also Similiar</em> Books </h4>
+                                            </div>
+                                        </div>
+                                        @{ 
+                                            foreach (var elem in Model.RecBooks)
+                                                {
+
+                                                    <div class="col-lg-3 col-sm-6">
+                                                        
+                                                        <a style="" href="/Books/Book/@elem.Id">
+                                                            <div class="item">
+                                                            <div class="thumb">
+                                                                
+                                                                <img src="@elem.Img" alt="" />
+
+                                                            </div>
+                                                            <div class="down-content">
+                                                                <h4>@elem.Title</h4>
+                                                                <span><i class="fa fa-eye"></i> @elem.Views</span>
+                                                            </div>
+                                                        </div>
+                                                        </a>
+                                                    </div>
+                                                } 
+                                        }
+                                        <div class="col-lg-12">
+                                            <div class="main-button">
+                                                <a href="#">Load More Clips</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ***** Banner End ***** -->
+            <!-- ***** Gaming Library Start ***** -->
+            <div class="gaming-library profile-library">
+                <div class="col-lg-12">
+                    <div class="heading-section">
+                        <h4><em>Your Gaming</em> Library</h4>
+                    </div>
+                    <div class="item">
+                        <ul>
+                            <li><img src="assets/images/game-01.jpg" alt="" class="templatemo-item"></li>
+                            <li><h4>Dota 2</h4><span>Sandbox</span></li>
+                            <li><h4>Date Added</h4><span>24/08/2036</span></li>
+                            <li><h4>Hours Played</h4><span>634 H 22 Mins</span></li>
+                            <li><h4>Currently</h4><span>Downloaded</span></li>
+                            <li><div class="main-border-button border-no-active"><a href="#">Donwloaded</a></div></li>
+                        </ul>
+                    </div>
+                    <div class="item">
+                        <ul>
+                            <li><img src="assets/images/game-02.jpg" alt="" class="templatemo-item"></li>
+                            <li><h4>Fortnite</h4><span>Sandbox</span></li>
+                            <li><h4>Date Added</h4><span>22/06/2036</span></li>
+                            <li><h4>Hours Played</h4><span>745 H 22 Mins</span></li>
+                            <li><h4>Currently</h4><span>Downloaded</span></li>
+                            <li><div class="main-border-button border-no-active"><a href="#">Donwloaded</a></div></li>
+                        </ul>
+                    </div>
+                    <div class="item last-item">
+                        <ul>
+                            <li><img src="assets/images/game-03.jpg" alt="" class="templatemo-item"></li>
+                            <li><h4>CS-GO</h4><span>Sandbox</span></li>
+                            <li><h4>Date Added</h4><span>21/04/2022</span></li>
+                            <li><h4>Hours Played</h4><span>632 H 46 Mins</span></li>
+                            <li><h4>Currently</h4><span>Downloaded</span></li>
+                            <li><div class="main-border-button border-no-active"><a href="#">Donwloaded</a></div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- ***** Gaming Library End ***** -->
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="~/vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+<script src="~/assets/js/isotope.min.js"></script>
+<script src="~/assets/js/owl-carousel.js"></script>
+<script src="~/assets/js/tabs.js"></script>
+<script src="~/assets/js/popup.js"></script>
+<script src="~/assets/js/custom.js"></script>

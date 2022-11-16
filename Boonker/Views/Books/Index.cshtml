@@ -1,0 +1,49 @@
+﻿@using Boonker.Data; 
+@model UpdateViewModel;
+@{
+    ViewData["Title"] = "Insert";
+}
+<br>
+<h1>View</h1>
+
+@using (Html.BeginForm("Index", "Books", FormMethod.Post))
+{
+<div class="form-check">
+    <div class="form-group" style="color: white;">
+        <label>Title</label>
+        @Html.TextBoxFor(x => x.books.Title, new { @class = "form-control", @id = "exampleInputEmail1" })
+    </div>
+    <div class="col-form-label" style="color: white;">
+        <label>Author</label>
+        @Html.DropDownListFor(x => x.books.AuthorId,  new SelectList(Model.Authors, "Value", "Text", Model.books.AuthorId), new { @class = "form-control", @id = "exampleInputEmail1" })
+        <a href="https://localhost:44363/Author/CreateAuhtor" class="btn btn-primary">Create New Author</a>
+    </div>
+    <div class="col-form-label" style="color: white;">
+        <label>DSCR</label>
+        @Html.TextAreaFor(x => x.books.DSCR, new { @class = "form-control", @id = "exampleInputEmail1" })
+    </div>
+    <div class="col-form-label" style="color: white;">
+        <label>Price</label>
+        @Html.TextBoxFor(x => x.books.Price, new { @class = "form-control", @id = "exampleInputEmail1" })
+    </div>
+    <div class="col-form-label" style="color: white; ">
+        <label>Amount</label>
+        @Html.TextBoxFor(x => x.books.Amount, new { @class = "form-control", @id = "exampleInputEmail1" })
+    </div>
+    <div class="col-form-label" style="color: white;">
+        <label>Favorite</label>
+        @Html.CheckBoxFor(x => x.books.IsFav, new { @class = "form-check-label", @id = "exampleInputEmail1" })
+    </div>
+    <div class="col-form-label" style="color: white;">
+        <label>Image</label>
+        @Html.TextBoxFor(x => x.books.Img, new { @class = "form-control", @id = "exampleInputEmail1" })
+    </div>
+    <div class="col-form-label" style="color: white;">
+        <label>Category</label>
+        @Html.DropDownListFor(x => x.books.CategoryId, new SelectList(Model.Categories, "Value", "Text", Model.books.CategoryId), new { @class = "form-control", @id = "exampleInputEmail1" })
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</div>
+}

@@ -1,0 +1,28 @@
+﻿@using Boonker.Data.Models;
+@model Author;
+@{
+    ViewData["Title"] = "Insert";
+}
+<br>
+<h1>View</h1>
+
+@using (Html.BeginForm("CreateAuthor", "Author", FormMethod.Post))
+{
+<div class="form-check">
+    <div class="form-group" style="color: white;">
+        <label>Name</label>
+        @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @id = "exampleInputEmail1" })
+    </div>
+    <div class="form-group" style="color: white;">
+        <label>Description</label>
+        @Html.TextBoxFor(x => x.DSCR, new { @class = "form-control", @id = "exampleInputEmail1" })
+    </div>
+    <div class="form-group" style="color: white;">
+        <label>Image</label>
+        @Html.TextBoxFor(x => x.Image, new { @class = "form-control", @id = "exampleInputEmail1" })
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</div>
+}
