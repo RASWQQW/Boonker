@@ -11,13 +11,14 @@ namespace Boonker.Controllers
 {
     public class AuthenController: Controller
     {
-        //public readonly BooksAddData context;
+        public readonly BooksAddData context;
         public readonly UserManager<User> _userManager;
         public readonly SignInManager<User> _signInManager;
 
-        public AuthenController(UserManager<User> userManager, SignInManager<User> signInManager)
+
+        public AuthenController(BooksAddData Data, UserManager<User> userManager, SignInManager<User> signInManager)
         {
-            //this.context = Data;
+            this.context = Data;
             _userManager = userManager;
             _signInManager = signInManager;
         }
@@ -26,6 +27,7 @@ namespace Boonker.Controllers
         public ActionResult Register()
         {
             User model = new User();
+
             return View(model);
         }
 
@@ -39,30 +41,47 @@ namespace Boonker.Controllers
                     Email = model.Email,
                     UserName = model.UserName,
                     Password = model.Password,
-                    PasswordCheck = model.PasswordCheck
+                    PasswordCheck = model.PasswordCheck,
+                    Followers = 0,
+                    Role = "Client",
+                    Image = "DefaultUserImage.png",
+                    addId = context.User.Count() + 1
                 };
 
                 var result = await _userManager.CreateAsync(userCreate, model.Password);
 
                 if (result.Succeeded) { 
-                    return RedirectToAction("Authen", "Login"); }
+                    return RedirectToAction("Login", "Authen"); }
                 else
                 {
                     foreach (var error in result.Errors)
                     {
-                        ModelState.AddModelError(string.Empty, error.Description);
+                        if(error.Code.ToString().ToLower().Contains("password"))
+                        {
+                            ModelState.AddModelError("Password", error.Description);
+                            ModelState.AddModelError("PasswordCheck", error.Description);
+                        }
+                        if (error.Code.ToString().ToLower().Contains("email")){
+                            ModelState.AddModelError("Email", error.Description);
+                        }
+                        if (error.Code.ToString().ToLower().Contains("username")){
+                            ModelState.AddModelError("UserName", error.Description);
+                        }
                     }
-                    
                 }
             }
-            return View(model);
+            return View(model); 
         }
-
 
         [HttpGet]
         public ActionResult Login()
         {
-            User model = new User();
+            LoginViewModel model = new LoginViewModel();
+            User user = new User();
+
+            model.Email = user.Email;
+            model.Password = user.Password;
+
             return View(model);
         }
 
@@ -72,13 +91,15 @@ namespace Boonker.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememeberMe, false);
+                var state = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememeberMe, false);
 
+                if (state.Succeeded)
+                {
+                    return RedirectToAction("List", "Books");
+                }
             }
-            else
-            {
-                ModelState.AddModelError("", "Неправильный логин и (или) пароль");
-            }
+
+            ModelState.AddModelError("Email", "Неправильный логин и (или) пароль");
             return View(model);
         }
 
@@ -88,7 +109,7 @@ namespace Boonker.Controllers
         {
             // удаляем аутентификационные куки
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Books", "List");
+            return RedirectToAction("List", "Books");
         }
     }
 }

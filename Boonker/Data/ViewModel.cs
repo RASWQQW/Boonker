@@ -8,7 +8,6 @@ namespace Boonker.Data
 {
     public class ViewModel
     {
-
         public IEnumerable<Book> Allbooks { get; set; }
         public Cat cats { get; set; }
         public string title { get; set; }

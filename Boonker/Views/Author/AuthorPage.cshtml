@@ -1,0 +1,108 @@
+﻿@using Boonker.Data;
+@model AuthorViewModel
+
+<!-- Bootstrap core CSS -->
+<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+
+<!-- Additional CSS Files -->
+<link rel="stylesheet" href="~/assets/css/fontawesome.css">
+<link rel="stylesheet" href="~/assets/css/templatemo-cyborg-gaming.css">
+<link rel="stylesheet" href="~/assets/css/owl.css">
+<link rel="stylesheet" href="~/assets/css/animate.css">
+<link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+
+
+                <!-- ***** Featured Start ***** -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="feature-banner header-text">
+                            <div class="row">
+                                <center>
+                                    <div class="col-lg-6">
+                                        <img src="~/files/authors/@Model.Author.Image.ToString()" alt="" style="border-radius: 23px;">
+                                    </div>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ***** Featured End ***** -->
+                <!-- ***** Details Start ***** -->
+                <div class="game-details">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h3>@Model.Author.FirstName @Model.Author.LastName</h3>
+                            <h6>@Model.Author.DSCR</h6>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="left-info">
+                                            <div class="left">
+                                                <h4>Fortnite</h4>
+                                                <span>Sandbox</span>
+                                            </div>
+                                            <ul>
+                                                <li><i class="fa fa-star"></i> 4.8</li>
+                                                <li><i class="fa fa-download"></i> 2.3M</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="right-info">
+                                            <ul>
+                                                <li><i class="fa fa-star"></i>@Model.BooksAmount</li>
+                                                <li><i class="fa fa-download"></i> 2.3M</li>
+                                                <li><i class="fa fa-server"></i> 36GB</li>
+                                                <li>
+                                                    <i class="fa fa-gamepad"></i>
+                                                    @{ foreach (var janr in Model.AllJanres)
+                                                    {
+                                                        <p>@janr </p>
+                                                    } }
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    @{
+                                        foreach (var book in Model.AuthorBooks)
+                                        {
+
+                                            <div class="col-lg-3 col-sm-6">
+                                                <div class="item">
+                                                    <a href="/Books/Book/@book.Id"><img src="~/files/books/@book.ImgEntry.Image1" alt=""></a>
+                                                    <h4>@book.Title<br><span>@book.Author.FirstName @book.Author.LastName</span></h4>
+                                                    <ul>
+                                                        <li>@book.Price.ToString("c")</li>
+                                                        <li><i class="fa fa-download"></i> 2.3M</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    <div class="col-lg-12">
+                                        <p>@Model.Author.DSCR</p>
+                                    </div>
+                                    @*<div class="col-lg-12">
+                                        <div class="main-border-button">
+                                            <a href="#">Download Fortnite Now!</a>
+                                        </div>
+                                    </div>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ***** Details End ***** -->
+
+
+                <script src="~/vendor/jquery/jquery.min.js"></script>
+                <script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+                <script src="~/assets/js/isotope.min.js"></script>
+                <script src="~/assets/js/owl-carousel.js"></script>
+                <script src="~/assets/js/tabs.js"></script>
+                <script src="~/assets/js/popup.js"></script>
+                <script src="~/assets/js/custom.js"></script>

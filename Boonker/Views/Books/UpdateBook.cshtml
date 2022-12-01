@@ -7,7 +7,7 @@
 
 <h1>Delete</h1>
 <h3>Are you sure you want to delete this?</h3>
-@using (Html.BeginForm("UpdateBook", "Books", FormMethod.Post))
+@using (Html.BeginForm("UpdateBook", "Books", FormMethod.Post, new {  @enctype = "multipart/form-data" }))
 {
 <div class="form-check">
     <div class="form-group" style="color: white;">
@@ -20,7 +20,7 @@
     </div>
     <div class="col-form-label" style="color: white;">
         <label>Author</label>
-        @Html.DropDownListFor(x => x.books.AuthorId, new SelectList(Model.Authors, "Value", "Text", Model.books.AuthorId), new {@class = "form-control", @id = "exampleInputEmail1" })
+        @Html.DropDownListFor(x => x.books.AuthorId, new SelectList(Model.Authors, "Value", "Text", Model.books.AuthorId), new { @class = "form-control", @id = "exampleInputEmail1" })
         <a href="https://localhost:44363/Author/CreateAuthor" class="btn btn-primary">Create New Author</a>
     </div>
     <div class="col-form-label" style="color: white;">
@@ -39,10 +39,54 @@
         <label>Favorite</label>
         @Html.CheckBoxFor(x => x.books.IsFav, new { @class = "form-check-label", @id = "exampleInputEmail1" })
     </div>
-    <div class="col-form-label" style="color: white;">
-        <label>Image</label>
-        @Html.TextBoxFor(x => x.books.Img, new { @class = "form-control", @id = "exampleInputEmail1" })
-    </div>
+    <label>Images</label>
+    <ul class="nav">
+        <li>    
+            <div class="col-form-label" style="color: white; width: 200px;">
+                @Html.TextBoxFor(x => x.Images.Image1,
+                    new { @onchange = "loadFile(event)", @type = "file", @class = "form-control", @id = "exampleInputEmail1", @value= Model.books.ImgEntry.Image1 })
+                @Html.ValidationMessageFor(x => x.Images.Image1, "", new { @class = "text-danger" })
+            </div>
+        </li>
+        <li>
+            <div class="col-form-label" style="color: white; width: 200px;">
+                @Html.TextBoxFor(x => x.Images.Image2,
+                new { @onchange = "loadFile(event)",  @type = "file", @class = "form-control", @id = "exampleInputEmail1", @value = Model.books.ImgEntry.Image2 })
+                @Html.ValidationMessageFor(x => x.Images.Image2, "", new { @class = "text-danger" })
+            </div>
+        </li>
+        <li>
+            <div class="col-form-label" style="color: white; width: 200px;">
+                @Html.TextBoxFor(x => x.Images.Image3,
+                new { @onchange = "loadFile(event)",  @type = "file", @class = "form-control", @id = "exampleInputEmail1", @value = Model.books.ImgEntry.Image3 })
+                @Html.ValidationMessageFor(x => x.Images.Image3, "", new { @class = "text-danger" })
+            </div>
+        </li>
+        <li>
+            <div class="col-form-label" style="color: white; width: 200px;">
+                @Html.TextBoxFor(x => x.Images.Image4,
+                new { @onchange = "loadFile(event)",  @type = "file", @class = "form-control", @id = "exampleInputEmail1", @value = Model.books.ImgEntry.Image4})
+                @Html.ValidationMessageFor(x => x.Images.Image4, "", new { @class = "text-danger" })
+            </div>
+        </li>
+        <li>
+            <div class="col-form-label" style="color: white; width: 200px;">
+                @Html.TextBoxFor(x => x.Images.Image5,
+                new { @onchange = "loadFile(event)",  @type = "file", @class = "form-control", @id = "exampleInputEmail1", @value = Model.books.ImgEntry.Image5 })
+                @Html.ValidationMessageFor(x => x.Images.Image5, "", new { @class = "text-danger" })
+            </div>
+        </li>
+    </ul>
+
+    <script>
+          var loadFile = function(event) {
+            var output = document.getElementById('output');
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = function() {
+              URL.revokeObjectURL(output.src) // free memory
+            }
+          };
+    </script>
     <div class="col-form-label" style="color: white;">
         <label>Category</label>
         @Html.DropDownListFor(n => n.books.CategoryId, new SelectList(Model.Categories, "Value", "Text", Model.CategoryId), new { @class = "form-control", @id = "exampleInputEmail1" })

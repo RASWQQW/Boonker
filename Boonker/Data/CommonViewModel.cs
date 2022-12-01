@@ -8,9 +8,8 @@ namespace Boonker.Data.Models
     public class CommonViewModel
     {
         public List<Book> RecBooks { get; set; }
-
         public Book books { get; set; }
         public List<Cat> AllCats { get; set; }
-        public List<int> CatAmount {get; set;} 
+        public List<int> CatAmount { get; set; } 
     }
 }

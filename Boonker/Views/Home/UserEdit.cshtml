@@ -1,0 +1,39 @@
+﻿@using Boonker.Data;
+
+@model UserViewModel;
+
+@using (Html.BeginForm("UserEdit", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-check">
+        <div class="form-group" style="color: white;">
+            <label>Id</label>
+            @Html.TextBoxFor(x => x.currentUser.Id, new { 
+                @class = "form-control", @id = "exampleInputEmail1", @value = Model.currentUser.UserName, @readonly="true" })
+        </div>  
+       
+        <div class="form-group" style="color: white;">
+            <label>FirstName</label>
+            @Html.TextBoxFor(x => x.currentUser.UserName, new { 
+                @class = "form-control", @id = "exampleInputEmail1", @value = Model.currentUser.UserName })
+        </div>
+        <div class="form-group" style="color: white;">
+            <label>Email</label>
+            @Html.TextBoxFor(x => x.currentUser.Email, new { 
+                @class = "form-control", @id = "exampleInputEmail1", @value = Model.currentUser.Email })
+        </div>
+        <div class="form-group" style="color: white;">
+            <label>Description</label>
+            @Html.TextAreaFor(x => x.currentUser.About, new { 
+                @class = "form-control", @id = "exampleInputEmail1", @value = Model.currentUser.About})
+        </div>
+        <div class="form-group" style="color: white;">
+            <label>Image</label>
+            <img style="width:140px; height:140px;"src="~/files/users/@Model.currentUser.Image" />
+            @Html.TextBoxFor(x => x.UserImage, new { @type = "file", @class = "form-control", @id = "exampleInputEmail1" })
+            @Html.ValidationMessageFor(model => model.UserImage, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+}

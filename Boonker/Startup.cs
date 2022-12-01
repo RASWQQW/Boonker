@@ -2,6 +2,7 @@ using Boonker.Controllers;
 using Boonker.Data;
 using Boonker.Data.Models;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -42,6 +44,8 @@ namespace Boonker
             services.AddDbContext<BooksAddData>(o => o.UseNpgsql(_configStr.GetConnectionString("DefaultConnection")));
             //services.AddDbContext<BooksAddData>(options => options.UseSqlServer(_configStr.GetConnectionString("DefaultConnection")));
 
+            services.AddDataProtection()
+                .PersistKeysToFileSystem(new DirectoryInfo(Path.GetTempPath()));
 
             services.AddControllersWithViews()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddSessionStateTempDataProvider();
@@ -49,20 +53,22 @@ namespace Boonker
             //services.AddIdentity<User, IdentityRole<long>>().AddUserStore<BooksAddData>()
             //        .AddDefaultTokenProviders();
 
-            services.AddIdentity<User, IdentityRole>(options => {
+            services.AddIdentity<User, IdentityRole>(options =>
+            {
                 options.User.RequireUniqueEmail = false;
-                })
+            })
             .AddEntityFrameworkStores<BooksAddData>()
             .AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment()) { app.UseDeveloperExceptionPage(); }
+            //if (env.IsDevelopment()) { app.UseDeveloperExceptionPage(); }
 
             app.UseRouting();
             app.UseStaticFiles();
+            app.UseDeveloperExceptionPage();
 
             app.UseAuthentication();    // подключение аутентификации
             app.UseAuthorization();
@@ -78,13 +84,6 @@ namespace Boonker
                 routs.MapRoute(name: "author", template: "Author/{action=CreateAuthor}/");   
                 });
 
-
-            //using base object with scope such as thread elements
-            //using (var scope = app.ApplicationServices.CreateScope())
-            //{
-            //    BooksAddData content = scope.ServiceProvider.GetRequiredService<BooksAddData>();
-            //    DataInsert.Initial(content);
-            //}
         }
     }
 }

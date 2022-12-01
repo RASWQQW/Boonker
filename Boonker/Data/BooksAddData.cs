@@ -21,18 +21,21 @@ namespace Boonker.Data
         {
             modelbuilder.UseSerialColumns();
             base.OnModelCreating(modelbuilder);
-            modelbuilder.Ignore<IdentityUserLogin<string>>();
-            modelbuilder.Ignore<IdentityUserRole<string>>();
-            modelbuilder.Ignore<IdentityUserClaim<string>>();
-            modelbuilder.Ignore<IdentityUserToken<string>>();
-            modelbuilder.Ignore<IdentityUser<string>>();
-            modelbuilder.Ignore<User>();
+            //modelbuilder.Ignore<IdentityUserLogin<string>>();
+            //modelbuilder.Ignore<IdentityUserRole<string>>();
+            //modelbuilder.Ignore<IdentityUserClaim<string>>();
+            //modelbuilder.Ignore<IdentityUserToken<string>>();
+            //modelbuilder.Ignore<IdentityUser<string>>();
+            //modelbuilder.Ignore<RoleManager<string>>();
         }
 
         public DbSet<Book> Books { get; set; }
         public DbSet<Cat> Cats { get; set; }
         public DbSet<Author> Authors { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<ImgEntry> ImgEntry { get; set; }
+        public DbSet<UserFavBook> UserFavBook { get; set; }
+        public DbSet<UserCreatedBook> UserCreatedBook { get; set; }
+        public DbSet<User> User { get; set; }
 
     }
 }

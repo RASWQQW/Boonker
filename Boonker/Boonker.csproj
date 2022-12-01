@@ -16,6 +16,9 @@
     <None Include="..\.editorconfig" Link=".editorconfig" />
     <None Include="wwwroot\cyborg-1.0.0\.idea\.gitignore" />
     <None Include="wwwroot\cyborg-1.0.0\.idea\cyborg-1.0.0.iml" />
+    <None Include="wwwroot\files\books\bookss.jpg" />
+    <None Include="wwwroot\files\books\bookss223.jpg" />
+    <None Include="wwwroot\files\books\bookss22311.jpg" />
     <None Include="wwwroot\vendor\bootstrap-icons\fonts\bootstrap-icons.woff2" />
     <None Include="wwwroot\vendor\bootstrap\css\bootstrap-grid.css.map" />
     <None Include="wwwroot\vendor\bootstrap\css\bootstrap-grid.min.css.map" />
@@ -71,6 +74,7 @@
     <PackageReference Include="Npgsql" Version="5.0.15" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.7" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.0" />
+    <PackageReference Include="System.Text.Encodings.Web" Version="5.0.0" />
   </ItemGroup>
 
 </Project>

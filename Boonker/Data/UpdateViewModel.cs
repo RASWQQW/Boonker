@@ -1,4 +1,5 @@
 ﻿using Boonker.Data.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace Boonker.Data
        public int CategoryId { get; set; }
 
        public List<SelectListItem> Authors { get; set; }
+       public ImagesForForm Images { get; set; }
 
     }
 }

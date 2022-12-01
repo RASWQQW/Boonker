@@ -12,7 +12,12 @@ namespace Boonker.Data.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public string DSCR { get; set; }
+        
         public string Img { get; set; }
+
+        [ForeignKey("ImgEntry")]
+        public int ImgEntryId { get; set; }
+        public ImgEntry ImgEntry { get; set; }
 
         [ForeignKey("Author")]
         public int AuthorId { get; set; }
@@ -20,13 +25,12 @@ namespace Boonker.Data.Models
 
         [ForeignKey("Cat")]
         public int CategoryId { get; set; }
-        public virtual Cat Category { get; set; }
+        public Cat Category { get; set; }
         public int Amount { get; set; }
         public int Price { get; set; }
         public bool IsFav { get; set; }
         public int Views { get; set; }
         public int Likes { get; set; }
-
         public int tirage { get; set; }
     }
 }

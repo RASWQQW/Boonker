@@ -75,6 +75,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="mb-2">Welcome to Boonker! 👋</h4>
+                        <h4 class="mb-2">@ViewBag.Error</h4>
                         <p class="mb-4">Please sign-in to your account and start the adventure</p>
                         @using (Html.BeginForm("LogIn", "Authen", FormMethod.Post))
                         {
@@ -87,16 +88,14 @@
                                 <div class="d-flex justify-content-between">
                                     <label class="form-label" for="password">Password</label>
 
-                                    @*<a href="auth-forgot-password-basic.html">
-                        <small>Forgot Password?</small>
-                    </a>*@
                                 </div>
                                 <div class="input-group input-group-merge">
 
                                     @Html.TextBoxFor(x => x.Password, new { @class = "form-control", @id = "password" })
-
                                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                 </div>
+                                <p style="color:red">@Html.ValidationMessageFor(model => model.Email)</p>
+
                             </div>
 
                             <div class="mb-3">
@@ -115,11 +114,10 @@
                             </div>
 
                         }
-                        <span>@ViewBag.Warn</span>
                         <p class="text-center">
-                            <span>New on our platform?</span>
-                            <a href="/Register/">
-                                <span>Create an account</span>
+                            <span>New User in?</span>
+                            <a href="/Authen/Register/">
+                                <span>Sign Up</span>
                             </a>
                         </p>
                     </div>

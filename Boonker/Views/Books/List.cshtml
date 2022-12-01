@@ -44,8 +44,8 @@
                         
                     <div class="col-lg-3 col-sm-6">
                         <div class="item">
-                            <a href="/Books/Book/@book.Id"><img src="@book.Img" alt=""></a>
-                            <h4>@book.Title<br><span>@book.Author</span></h4>
+                            <a href="/Books/Book/@book.Id"><img src="~/files/books/@book.ImgEntry.Image1.ToString()" alt=""></a>
+                            <h4>@book.Title<br><a href="@Url.Action("AuthorPage","Author", new { @AuthorId = @book.Author.Id })"><span>@book.Author.FirstName @book.Author.LastName</span></a></h4>
                             <ul>
                                 <li>@book.Price.ToString("c")</li>
                                 <li><i class="fa fa-download"></i> 2.3M</li>
@@ -59,10 +59,11 @@
                         </div>
                     </div>
                         }
+
                 }
                 <div class="col-lg-12">
                     <div class="main-button">
-                        <a href="browse.html">Discover Popular</a>
+                        <a href="/Books/Charts/">Discover Popular</a>
                     </div>
                 </div>
             </div>
