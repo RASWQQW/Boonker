@@ -1,8 +1,9 @@
-﻿using Boonker.Data;
+﻿    using Boonker.Data;
 using Boonker.Data.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,7 +45,20 @@ namespace Boonker.Controllers
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var currentUser = context.User.FirstOrDefault(w => w.Id == userId);
-            var UserBooks = context.UserCreatedBook.Where(s => s.CUser == currentUser).Select(w => w.CreatedBook).ToList();
+
+            var UserBooks = context.Books
+                .Include(w => w.Author).Include(w => w.Category).Include(w => w.ImgEntry)
+                .Join(context.UserCreatedBook.Where(w => w.CUser.Id == currentUser.Id),
+                    c => c.Id, t => t.CreatedBook.Id, (c, t) => new Book
+                    {
+                        ImgEntry = c.ImgEntry,
+                        Author = c.Author,
+                        Title = c.Title,
+                        Id = c.Id,
+                        Price = c.Price,
+
+                    }
+                ).ToList();
 
             mainUser.currentUser = currentUser;
             mainUser.UserBooks = UserBooks;

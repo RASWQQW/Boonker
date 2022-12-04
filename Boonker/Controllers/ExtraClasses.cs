@@ -12,12 +12,19 @@ namespace Boonker.Controllers
 {
     public class ExtraClasses
     {
-       
-        public string UploadFile(   IWebHostEnvironment Enviro,
-                                    IFormFile und,
-                                    CreateAuthorViewModel fileN, 
-                                    string option
-                                )
+        public string Extracter(IFormFile fileUp, IWebHostEnvironment Enviro)
+        {
+            if (fileUp != null)
+            {
+                return UploadFile(Enviro, und: fileUp, fileN: null, option: "books").ToString();
+            } else {
+                return " ";
+            }
+        }
+        public string UploadFile(IWebHostEnvironment Enviro,
+                                 IFormFile und,
+                                 CreateAuthorViewModel fileN, 
+                                 string option )
         {
             IFormFile file = null; string path = "files"; 
             if(und == null) { file = fileN.Image;}

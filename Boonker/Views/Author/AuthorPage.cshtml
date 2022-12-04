@@ -59,29 +59,42 @@
                                                 <li>
                                                     <i class="fa fa-gamepad"></i>
                                                     @{ foreach (var janr in Model.AllJanres)
-                                                    {
-                                                        <p>@janr </p>
-                                                    } }
+                                                        {
+                                            <p>@janr </p> } }
                                                 </li>
                                             </ul>
                                         </div>
                                     </div>
-                                    @{
-                                        foreach (var book in Model.AuthorBooks)
-                                        {
+                                    <div class="row">
+                                        @{
+                                            foreach (var book in Model.AuthorBooks)
+                                            {
 
-                                            <div class="col-lg-3 col-sm-6">
-                                                <div class="item">
-                                                    <a href="/Books/Book/@book.Id"><img src="~/files/books/@book.ImgEntry.Image1" alt=""></a>
-                                                    <h4>@book.Title<br><span>@book.Author.FirstName @book.Author.LastName</span></h4>
-                                                    <ul>
-                                                        <li>@book.Price.ToString("c")</li>
-                                                        <li><i class="fa fa-download"></i> 2.3M</li>
-                                                    </ul>
+                                                <div class="col-lg-3 col-sm-6">
+                                                    <div class="item">
+                                                        <a href="/Books/Book/@book.Id"><img src="~/files/books/@book.ImgEntry.Image1.ToString()" alt=""></a>
+                                                        <h4>@book.Title<br><a href="@Url.Action("AuthorPage","Author", new { @AuthorId = @book.Author.Id })"><span>@book.Author.FirstName @book.Author.LastName</span></a></h4>
+                                                        <ul>
+                                                            <li>@book.Price.ToString("c")</li>
+                                                            <li><i class="fa fa-download"></i> 2.3M</li>
+                                                        </ul>
+                                                        <div class="text-button accordion">
+                                                            <a href="@Url.Action("Delete", "Books", new { @id = @book.Id })">Delete</a>
+                                                        </div>
+                                                        <div class="text-button accordion">
+                                                            <a href="@Url.Action("UpdateBook", "Books", new { @id = @book.Id })">Update</a>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            }
+
                                         }
-                                    }
+                                        <div class="col-lg-12">
+                                            <div class="main-button">
+                                                <a href="/Books/Charts/">Discover Popular</a>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-lg-12">
                                         <p>@Model.Author.DSCR</p>
                                     </div>

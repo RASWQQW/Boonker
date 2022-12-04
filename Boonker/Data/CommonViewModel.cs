@@ -11,5 +11,6 @@ namespace Boonker.Data.Models
         public Book books { get; set; }
         public List<Cat> AllCats { get; set; }
         public List<int> CatAmount { get; set; } 
+        public List<FoundObjects> FoundObjets { get; set; }
     }
 }

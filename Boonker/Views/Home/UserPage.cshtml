@@ -37,7 +37,8 @@
                                             foreach (var book in Model.UserBooks)
                                             {
                                                 <span>@book.Title </span>
-                                            } }
+                                            } 
+                                            }
                                     </li>
                                 </ul>
                             </div>
@@ -48,8 +49,34 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="heading-section">
-                                                <h4><em>Also Similiar</em> Books </h4>
+                                                <h4><em>User Created</em> Books </h4>
                                             </div>
+                                            @{
+                                                if (Model.UserBooks != null)
+                                                {
+                                                    foreach (var book in Model.UserBooks)
+                                                    {
+
+                                                        <div class="col-lg-3 col-sm-6">
+                                                            <div class="item">
+                                                                <a href="/Books/Book/@book.Id"><img src="~/files/books/@book.ImgEntry.Image1.ToString()" alt=""></a>
+                                                                <h4>@book.Title<br><a href="@Url.Action("AuthorPage","Author", new { @AuthorId = @book.Author.Id })"><span>@book.Author.FirstName @book.Author.LastName</span></a></h4>
+                                                                <ul>
+                                                                    <li>@book.Price.ToString("c")</li>
+                                                                    <li><i class="fa fa-download"></i> 2.3M</li>
+                                                                </ul>
+                                                                <div class="text-button accordion">
+                                                                    <a href="@Url.Action("Delete", "Books", new { @id = @book.Id })">Delete</a>
+                                                                </div>
+                                                                <div class="text-button accordion">
+                                                                    <a href="@Url.Action("UpdateBook", "Books", new { @id = @book.Id })">Update</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
+
+                                            }
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="main-button">

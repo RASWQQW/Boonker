@@ -20,6 +20,7 @@ namespace Boonker.Controllers
         private readonly BooksAddData context;
 
         public readonly IWebHostEnvironment Enviro;
+
         public BooksController(BooksAddData Data, IWebHostEnvironment Env)
         {
             context = Data;
@@ -52,15 +53,16 @@ namespace Boonker.Controllers
 
         }
 
-        [Route("Books/Book/{id}")]
-        public ActionResult BookMore(int id)
+        [Route("/Books/Book/{id}/{title?}/{firstN?}/{lastN?}")]
+        public ActionResult BookMore(int id, string title, string firstN, string lastN)
         {
             var obj = context.Books
                 .Include(w => w.Category)
                 .Include(w => w.ImgEntry)
+                .Include(w => w.Author)
                 .FirstOrDefault(w => w.Id == id);
 
-            var simobj = context.Books.Include(w => w.ImgEntry).Include(w => w.Author)
+            var simobj = context.Books.Include(w => w.Category).Include(w => w.ImgEntry).Include(w => w.Author)
                 .Where(w => w.Category == obj.Category).ToList();
 
             simobj.Remove(obj);
@@ -71,7 +73,8 @@ namespace Boonker.Controllers
 
             common.books = obj;
             common.RecBooks = simobj;
-
+            if (!(string.IsNullOrEmpty(title) && string.IsNullOrEmpty(firstN) && string.IsNullOrEmpty(lastN))
+                ) { common.FoundObjets = SearchBook(title, firstN, lastN); }
 
             context.SaveChanges();
 
@@ -121,41 +124,28 @@ namespace Boonker.Controllers
                 dbBook.AuthorId = obj.books.AuthorId;
                 dbBook.CategoryId = obj.books.CategoryId;
 
-                ExtraClasses file = new ExtraClasses();
 
-                if(obj.Images != null)
+                ExtraClasses cls = new ExtraClasses();
+
+                if (obj.Images != null)
                 {
-                    if (obj.Images.Image1 != null)
-                    {
-                        dbBook.ImgEntry.Image1 = file.UploadFile(
-                            Enviro, und: obj.Images.Image1, fileN: null, option: "books").ToString();
-                    }
-                    if (obj.Images.Image2 != null)
-                    {
-                        dbBook.ImgEntry.Image2 = file.UploadFile(
-                            Enviro, und: obj.Images.Image2, fileN: null, option: "books").ToString();
-                    }
-                    if (obj.Images.Image3 != null)
-                    {
-                        dbBook.ImgEntry.Image3 = file.UploadFile(
-                            Enviro, und: obj.Images.Image3, fileN: null, option: "books").ToString();
-                    }
-                    if (obj.Images.Image4 != null)
-                    {
-                        dbBook.ImgEntry.Image4 = file.UploadFile(
-                            Enviro, und: obj.Images.Image4, fileN: null, option: "books").ToString();
-                    }
-                    if (obj.Images.Image5 != null)
-                    {
-                        dbBook.ImgEntry.Image5 = file.UploadFile(
-                            Enviro, und: obj.Images.Image5, fileN: null, option: "books").ToString();
-                    }
+                    dbBook.ImgEntry.Image1 = cls.Extracter(obj.Images.Image1, Enviro);
+                    dbBook.ImgEntry.Image2 = cls.Extracter(obj.Images.Image2, Enviro);
+                    dbBook.ImgEntry.Image3 = cls.Extracter(obj.Images.Image3, Enviro);
+                    dbBook.ImgEntry.Image4 = cls.Extracter(obj.Images.Image4, Enviro);
+                    dbBook.ImgEntry.Image5 = cls.Extracter(obj.Images.Image5, Enviro);
+
                 }
 
                 context.SaveChanges();
             }
 
             return RedirectToAction("List", "Books");
+        }
+
+        private void Extracter(string image11, IFormFile image12)
+        {
+            throw new NotImplementedException();
         }
 
         public ActionResult Delete(int id)
@@ -208,8 +198,8 @@ namespace Boonker.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(UpdateViewModel model)
-{
+        public ActionResult Index(UpdateViewModel model){
+
             UserCreatedBook created = new UserCreatedBook {
 
                 CUser = context.User.FirstOrDefault(
@@ -223,73 +213,96 @@ namespace Boonker.Controllers
 
             }; context.UserCreatedBook.Add(created);
 
-            ExtraClasses file = new ExtraClasses();
+            ExtraClasses cls = new ExtraClasses();
             ImgEntry FullImage = new ImgEntry();
 
             FullImage.Id = context.ImgEntry.Count() + 1;
 
-            if (model.Images.Image1 != null) {
-                FullImage.Image1 = file.UploadFile(
-                    Enviro, und: model.Images.Image1, fileN: null, option: "books").ToString(); }
-            if (model.Images.Image2 != null) {
-                FullImage.Image2 = file.UploadFile(
-                    Enviro, und: model.Images.Image2, fileN: null, option: "books").ToString(); }
-            if (model.Images.Image3 != null){
-                FullImage.Image3 = file.UploadFile(
-                    Enviro, und: model.Images.Image3, fileN: null, option: "books").ToString(); }
-            if (model.Images.Image4 != null) {
-                FullImage.Image4 = file.UploadFile(
-                    Enviro, und: model.Images.Image4, fileN: null, option: "books").ToString(); }
-            if (model.Images.Image5 != null) {
-                FullImage.Image5 = file.UploadFile(
-                    Enviro, und: model.Images.Image5, fileN: null, option: "books").ToString(); }
+            if(model.Images != null)
+            {
+                FullImage.Image1 = cls.Extracter(model.Images.Image1, Enviro);
+                FullImage.Image2 = cls.Extracter(model.Images.Image2, Enviro);
+                FullImage.Image3 = cls.Extracter(model.Images.Image3, Enviro);
+                FullImage.Image4 = cls.Extracter(model.Images.Image4, Enviro);
+                FullImage.Image5 = cls.Extracter(model.Images.Image5, Enviro);
+            }
+
 
             model.books.ImgEntry = FullImage;
             model.books.ImgEntryId = FullImage.Id;
 
-            context.Books.Add(model.books);
+            context.ImgEntry.Add(FullImage);context.Books.Add(model.books);
             context.SaveChanges();
 
             return RedirectToAction("List", "Books");
-            }
-            [Route("Books/List")]
-            [Route("Books/List/{category}")]
-            public ViewResult List(string category)
+        }
+
+        [Route("Books/List")]
+        [Route("Books/List/{category}")]
+        public ViewResult List(string category)
+        {
+            string _cat = category;
+            List<Book> booksList = null;
+            Cat currCat = null;
+
+            if (string.IsNullOrEmpty(_cat))
             {
-                string _cat = category;
-                List<Book> booksList = null;
-                Cat currCat = null;
+                booksList = context.Books.Include(t => t.Category)
+                    .Include(w => w.Author)
+                    .Include(s => s.ImgEntry)
+                    .OrderByDescending(i => i.Id).ToList();
 
-                if (string.IsNullOrEmpty(_cat))
+            }
+            else {
+                booksList = context.Books.Include(t => t.Category)
+                    .Include(w => w.Author)
+                    .Include(s => s.ImgEntry)
+                    .Where(i => i.Category.Name.Equals(_cat)).OrderByDescending(i => i.Id).ToList();
+                currCat = context.Cats.FirstOrDefault(w => w.Name == _cat);
+            }
+
+            List<Cat> AllCats = context.Cats.ToList();
+
+            var BookObject = new ViewModel {
+                Allbooks = booksList,
+                cats = currCat,
+                AllCats = AllCats
+
+            };
+
+            ViewBag.Title = "Welcome to the Lib";
+            ViewBag.Also = "Our Popular Books Here";
+
+            return View(BookObject);
+        }
+            
+        
+        public List<FoundObjects> SearchBook(string title, string firstN, string lastN)
+        {
+
+            List<FoundObjects> objectfull = new GoogleSearchApi().Mousae(title, firstN + " " + lastN);
+
+            var user = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (User.Identity.IsAuthenticated)
+            {
+                var userIn = context.User.FirstOrDefault(w => w.Id == user);
+                var BookIn = context.Books.FirstOrDefault(w => w.Title.Replace(" ", "") == title &&
+                            w.Author.FirstName.Replace(" ", "") == firstN && w.Author.LastName.Replace(" ", "") == lastN);
+
+                var SaveSearched = new BookSearched
                 {
-                    booksList = context.Books.Include(t => t.Category)
-                        .Include(w => w.Author)
-                        .Include(s => s.ImgEntry)
-                        .OrderBy(i => i.Id).ToList();
-
-                }
-                else {
-                    booksList = context.Books.Include(t => t.Category)
-                        .Include(w => w.Author)
-                        .Include(s => s.ImgEntry)
-                        .Where(i => i.Category.Name.Equals(_cat)).OrderBy(i => i.Id).ToList();
-                    currCat = context.Cats.FirstOrDefault(w => w.Name == _cat);
-                }
-
-                List<Cat> AllCats = context.Cats.ToList();
-
-                var BookObject = new ViewModel {
-                    Allbooks = booksList,
-                    cats = currCat,
-                    AllCats = AllCats
-
+                    User = userIn,
+                    UserId = userIn.addId,
+                    Book = BookIn,
+                    BookId = BookIn.Id,
+                    ResultList = objectfull
                 };
 
-                ViewBag.Title = "Welcome to the Lib";
-                ViewBag.Also = "Our Popular Books Here";
-
-                return View(BookObject);
+                context.Searched.Add(SaveSearched);
+                context.SaveChanges();
             }
 
+            return objectfull;
         }
     }
+}
