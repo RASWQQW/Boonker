@@ -279,30 +279,39 @@ namespace Boonker.Controllers
         
         public List<FoundObjects> SearchBook(string title, string firstN, string lastN)
         {
-
-            List<FoundObjects> objectfull = new GoogleSearchApi().Mousae(title, firstN + " " + lastN);
-
-            var user = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (User.Identity.IsAuthenticated)
+            List<FoundObjects> objectfull = null;
+            try
             {
-                var userIn = context.User.FirstOrDefault(w => w.Id == user);
-                var BookIn = context.Books.FirstOrDefault(w => w.Title.Replace(" ", "") == title &&
-                            w.Author.FirstName.Replace(" ", "") == firstN && w.Author.LastName.Replace(" ", "") == lastN);
+                objectfull = new GoogleSearchApi().Mousae(title, firstN + " " + lastN);
 
-                var SaveSearched = new BookSearched
+                var user = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (User.Identity.IsAuthenticated)
                 {
-                    User = userIn,
-                    UserId = userIn.addId,
-                    Book = BookIn,
-                    BookId = BookIn.Id,
-                    ResultList = objectfull
-                };
+                    var userIn = context.User.FirstOrDefault(w => w.Id == user);
+                    var BookIn = context.Books.FirstOrDefault(w => w.Title.Replace(" ", "") == title &&
+                                w.Author.FirstName.Replace(" ", "") == firstN && w.Author.LastName.Replace(" ", "") == lastN);
 
-                context.Searched.Add(SaveSearched);
-                context.SaveChanges();
+                    var SaveSearched = new BookSearched
+                    {
+                        User = userIn,
+                        UserId = userIn.addId,
+                        Book = BookIn,
+                        BookId = BookIn.Id,
+                        ResultList = objectfull
+                    };
+
+                    //Response.Cookies.Append();
+
+                    context.Searched.Add(SaveSearched);
+                    context.SaveChanges();
+                }
+            }   
+            catch{
+                 objectfull = new List<FoundObjects> { new FoundObjects{ Title = "None", Url = "https//:www.google.com" }};
             }
 
             return objectfull;
+
         }
     }
 }

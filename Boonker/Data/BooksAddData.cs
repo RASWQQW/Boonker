@@ -37,6 +37,7 @@ namespace Boonker.Data
         public DbSet<UserCreatedBook> UserCreatedBook { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<BookSearched> Searched { get; set; }
+        public DbSet<Follows> Follows { get; set; }
 
     }
 }

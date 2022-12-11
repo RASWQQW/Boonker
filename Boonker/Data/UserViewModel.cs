@@ -12,5 +12,6 @@ namespace Boonker.Data
         public List<Book> UserBooks { get; set; }
         public IFormFile UserImage { get; set; }
         public int UserId { get; set; }
+        public List<Follows> Status { get; set; }
     }
 }

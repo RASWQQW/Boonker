@@ -35,37 +35,81 @@ namespace Boonker.Controllers
             return View();
         }
 
-        public IActionResult UserPage()
-        {
+        [Route("Home/UserPage/{id?}")]
+        public IActionResult UserPage(int id)
+        {   
             UserViewModel mainUser = new UserViewModel();
 
-            var user = context.User.FirstOrDefault(
-                w => w.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
+            User currentUser = null; List<Follows> Status = null;
 
+            if (id == 0 || id == null){
+                currentUser = context.User.FirstOrDefault(
+                    w => w.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
+            }
+            else{
+                currentUser = context.User.FirstOrDefault(
+                    w => w.addId == id);
 
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var currentUser = context.User.FirstOrDefault(w => w.Id == userId);
+                User IsUsers = null; User ToUser = null;
+                GainUser(id, ref ToUser, ref IsUsers, ref Status);
+            }
 
             var UserBooks = context.Books
-                .Include(w => w.Author).Include(w => w.Category).Include(w => w.ImgEntry)
-                .Join(context.UserCreatedBook.Where(w => w.CUser.Id == currentUser.Id),
-                    c => c.Id, t => t.CreatedBook.Id, (c, t) => new Book
-                    {
-                        ImgEntry = c.ImgEntry,
-                        Author = c.Author,
-                        Title = c.Title,
-                        Id = c.Id,
-                        Price = c.Price,
+               .Include(w => w.Author).Include(w => w.Category).Include(w => w.ImgEntry)
+               .Join(context.UserCreatedBook.Where(w => w.CUser.Id == currentUser.Id),
+                   c => c.Id, t => t.CreatedBook.Id, (c, t) => new Book
+                   {
+                       ImgEntry = c.ImgEntry,
+                       Author = c.Author,
+                       Title = c.Title,
+                       Id = c.Id,
+                       Price = c.Price,
+                   }
+               ).ToList();
 
-                    }
-                ).ToList();
 
             mainUser.currentUser = currentUser;
             mainUser.UserBooks = UserBooks;
+            mainUser.Status = Status;
 
-
-            return View(mainUser);
+            return id == 0 ? View(mainUser) : View("UserPageA", mainUser);
         }
+
+        [Route("Home/Follow/{id}")]
+        public ActionResult Indexs(int id)
+        {
+            User IsUsers = null; List<Follows> Status = null; User ToUser = null;
+            GainUser(id, ref ToUser, ref IsUsers, ref Status);
+
+            if(Status.Count() == 0){
+                ToUser.Followers = ToUser.Followers + 1;
+                Follows NewSection = new Follows
+                {
+                    UserId = ToUser.addId,
+                    FollowedUserId = IsUsers.addId,
+                    User = ToUser,
+                    FollowedUser = IsUsers
+                };
+                context.Follows.Add(NewSection); 
+            }
+            else{
+                ToUser.Followers = ToUser.Followers - 1;
+                context.Follows.Remove(Status.First());
+            }
+            context.SaveChanges();
+
+            return RedirectToAction("UserPage", "Home", new { id = id});
+        }
+
+        public void GainUser(int id, ref User ToUser, ref User IsUsers, ref List<Follows> Status){
+            ToUser = context.User.FirstOrDefault(w => w.addId == id);
+            var IsUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            IsUsers = context.User.FirstOrDefault(w => w.Id == IsUser);
+            var tUser = ToUser.addId; var iUser = IsUsers.addId;
+
+            Status = context.Follows.Where(w => w.UserId == tUser && w.FollowedUserId == iUser).ToList();
+        }
+
         [HttpGet]
         [Route("Home/UserEdit/{user_id}")]  
         public IActionResult UserEdit(int user_id)

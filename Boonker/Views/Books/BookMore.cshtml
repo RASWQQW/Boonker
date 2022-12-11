@@ -120,7 +120,12 @@
                                         <ul>
                                             @foreach(var item in Model.FoundObjets)
                                             {
-                                                <a class="active" href="@item.Url"><p class="">@item.Title</p></a>
+                                                if (item.Url == null){
+                                                    <a class="text-bg-light" href="/Home/UserPage/"><p class="">@item.Title</p></a>
+                                                }
+                                                else {
+                                                    <a class="text-bg-light" href="@item.Url"><p class="">@item.Title</p></a>
+                                                }
                                             }
                                         </ul>
                                     }
