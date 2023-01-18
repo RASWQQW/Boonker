@@ -230,6 +230,24 @@ namespace Boonker.Migrations
                     b.ToTable("ImgEntry");
                 });
 
+            modelBuilder.Entity("Boonker.Data.Models.ResOps", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
+
+                    b.Property<int>("codekey")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("email")
+                        .HasColumnType("text");
+
+                    b.HasKey("id");
+
+                    b.ToTable("PassResOps");
+                });
+
             modelBuilder.Entity("Boonker.Data.Models.User", b =>
                 {
                     b.Property<string>("Id")

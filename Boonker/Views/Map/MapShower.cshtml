@@ -1,0 +1,142 @@
+﻿@using Boonker.Data;
+@model MapViewModel
+
+
+    <body>
+        <center>
+            <div id="map" style="width:1180px; height:500px"></div>
+        </center>
+    </body>
+
+    <script src="https://maps.api.2gis.ru/2.0/loader.js?pkg=full"></script>
+    
+    <script type="text/javascript">
+        var map;
+
+        DG.then(function () {
+            map = DG.map('map', {
+                center: [54.98, 82.89],
+                zoom: 13
+            });
+
+            DG.marker([54.98, 82.89]).addTo(map).bindPopup('Вы кликнули по мне!');
+        });
+    </script>
+
+
+
+
+
+@*@using Boonker.Data;
+@model MapViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2GIS Navi API</title>
+    <meta name="description" content="Navi API directions example" />
+    <style>
+        html,
+        body,
+        #container {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #reset {
+            padding: 4px 10px;
+            background: #00a81f;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px 0 rgba(38, 38, 38, 0.5);
+            border: none;
+            color: #fff;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+            #reset:disabled {
+                background: #f2f2f2;
+                color: #6e6d6d;
+                cursor: default;
+            }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <script src="https://mapgl.2gis.com/api/js/v1"></script>
+    <script src="https://shorturl.at/fnoGN"></script>
+    <script>
+        const map = new mapgl.Map('container', {
+            center: [37.668598, 55.76259],
+            zoom: 13,
+            key: '',
+        });
+
+        const directions = new mapgl.Directions(map, {
+            // This key can be used for demo purpose only!
+            // You can get your own key on http://partner.api.2gis.ru/
+            directionsApiKey: 'Your directions API access key',
+        });
+        const markers = [];
+
+        let firstPoint;
+        let secondPoint;
+        // A current selecting point
+        let selecting = 'a';
+        const buttonText = ['Choose two points on the map', 'Reset points'];
+
+        const controlsHtml = `<button id="reset" disabled>${buttonText[0]}</button> `;
+        new mapgl.Control(map, controlsHtml, {
+            position: 'topLeft',
+        });
+        const resetButton = document.getElementById('reset');
+
+        resetButton.addEventListener('click', function () {
+            selecting = 'a';
+            firstPoint = undefined;
+            secondPoint = undefined;
+            directions.clear();
+            this.disabled = true;
+            this.textContent = buttonText[0];
+        });
+
+        map.on('click', (e) => {
+            const coords = e.lngLat;
+
+            if (selecting != 'end') {
+                // Just to visualize selected points, before the route is done
+                markers.push(
+                    new mapgl.Marker(map, {
+                        coordinates: coords,
+                        icon: 'https://docs.2gis.com/img/dotMarker.svg',
+                    }),
+                );
+            }
+
+            if (selecting === 'a') {
+                firstPoint = coords;
+                selecting = 'b';
+            } else if (selecting === 'b') {
+                secondPoint = coords;
+                selecting = 'end';
+            }
+
+            // If all points are selected — we can draw the route
+            if (firstPoint && secondPoint) {
+                directions.carRoute({
+                    points: [firstPoint, secondPoint],
+                });
+                markers.forEach((m) => {
+                    m.destroy();
+                });
+                resetButton.disabled = false;
+                resetButton.textContent = buttonText[1];
+            }
+        });
+    </script>
+</body>
+</html>*@

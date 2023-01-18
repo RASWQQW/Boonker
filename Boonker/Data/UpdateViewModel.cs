@@ -16,6 +16,8 @@ namespace Boonker.Data
 
        public List<SelectListItem> Authors { get; set; }
        public ImagesForForm Images { get; set; }
+       public string CurrentPassword { get; set; }
+       public string NewPassword { get; set; }
 
     }
 }

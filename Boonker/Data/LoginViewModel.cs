@@ -16,5 +16,7 @@ namespace Boonker.Data
         [DataType(DataType.Password)]
         public string Password { get; set; }
         public bool RememeberMe {get; set; }
+
+        public string user { get; set; } 
     }
 }

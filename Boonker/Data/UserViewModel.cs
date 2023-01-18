@@ -13,5 +13,8 @@ namespace Boonker.Data
         public IFormFile UserImage { get; set; }
         public int UserId { get; set; }
         public List<Follows> Status { get; set; }
+        public int keycode { get; set; }
+        public string user { get; set; }
+        public int number { get; set; }
     }
 }

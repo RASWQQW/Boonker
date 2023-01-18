@@ -77,41 +77,47 @@
                         <h4 class="mb-2">Welcome to Boonker! 👋</h4>
                         <h4 class="mb-2">@ViewBag.Error</h4>
                         <p class="mb-4">Please sign-in to your account and start the adventure</p>
-                        @using (Html.BeginForm("LogIn", "Authen", FormMethod.Post))
+                        @using (Html.BeginForm(ViewContext.RouteData.Values["action"].ToString(), "Authen", FormMethod.Post))
                         {
 
                             <div class="mb-3">
-                                <label for="email" class="form-label">Name</label>
+                                <label for="emali" class="form-label">Name</label>
                                 @Html.TextBoxFor(x => x.Email, new { @class = "form-control", @id = "email" })
-                            </div>
-                            <div class="mb-3 form-password-toggle">
-                                <div class="d-flex justify-content-between">
-                                    <label class="form-label" for="password">Password</label>
-
-                                </div>
-                                <div class="input-group input-group-merge">
-
-                                    @Html.TextBoxFor(x => x.Password, new { @class = "form-control", @id = "password" })
-                                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                                </div>
                                 <p style="color:red">@Html.ValidationMessageFor(model => model.Email)</p>
-
                             </div>
 
-                            <div class="mb-3">
-                                <div class="form-check">
-                                    @Html.CheckBoxFor(x => x.RememeberMe, new {@class= "form-check-input", @id= "remember-me" })
-                                    <label class="form-check-label" for="remember-me"> Remember Me </label>
+                            if (ViewContext.RouteData.Values["action"].ToString() != "RecoverPass")
+                            {
+                                <div class="mb-3 form-password-toggle">
+                                    <div class="d-flex justify-content-between">
+                                        <label class="form-label" for="password">Password</label>
+                                    </div>
+
+                                    <div class="input-group input-group-merge">
+
+                                        @Html.TextBoxFor(x => x.Password, new { @class = "form-control", @id = "password" })
+                                        <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                                    </div>
+                                    <p style="color:red">@Html.ValidationMessageFor(model => model.Email)</p>
                                 </div>
-                            </div>
 
-                             @*<div class="mb-3">
-                                <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        @Html.CheckBoxFor(x => x.RememeberMe, new { @class = "form-check-input", @id = "remember-me" })
+                                        <label class="form-check-label" for="remember-me"> Remember Me </label>
+                                    </div>
+                                </div>
+                            }
+
+                            <a href="@Url.Action("RecoverPass", "Authen")">reset password</a>
+
+                            @*<div class="mb-3">
+                                    <button class="btn btn-primary d-grid w-100" type="submit">reset password</button>
                             </div>*@
 
                             <div class="form-group">
-                                <button type="submit" class="btn btn-secondary">Sign In</button>
-                            </div>
+                                <button type="submit" class="btn btn-secondary">@ViewBag.Submit</button>
+                            </div>  
 
                         }
                         <p class="text-center">

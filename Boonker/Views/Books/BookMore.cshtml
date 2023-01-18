@@ -6,7 +6,31 @@
 <link rel="stylesheet" href="~/assets/css/templatemo-cyborg-gaming.css">
 <link rel="stylesheet" href="~/assets/css/owl.css">
 <link rel="stylesheet" href="~/assets/css/animate.css">
-<link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+<link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />\
+<style>
+    .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted black;
+    }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            /* Position the tooltip */
+            position: absolute;
+            z-index: 1;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+        }
+</style>
 
 
 <div class="row">
@@ -42,12 +66,10 @@
 
                                         @{ if (Model.books.ImgEntry.Image2 != null)
                                             {
-
                                                 <div class="carousel-item">
                                                     <img class="d-block w-100" src="~/files/books/@Model.books.ImgEntry.Image2.ToString()" 
                                                          alt="Book Image" style="border-radius: 23px;">
                                                 </div> 
-                                            
                                             } }
 
                                         @{ if (Model.books.ImgEntry.Image3 != null)
@@ -86,6 +108,8 @@
                                 <div class="col-lg-4 align-self-center">
                                     <div class="main-info header-text">
 
+
+
                                         @{ if (Model.books.IsFav)
                                             { <span>Liked Book</span> }
                                             else
@@ -94,10 +118,17 @@
                                         <h4>@Model.books.Title</h4>
                                         <h4>Author: @Model.books.Author.FirstName @Model.books.Author.LastName</h4>
                                         <p>@Model.books.DSCR.</p>
+
                                         <div class="main-border-button">
-                                            <a href="@Url.Action("BookMore", "Books", new { 
+                                            <a href=@Url.Action("AddingToBasket", "Basket", new { @book = Model.books.Id })>
+                                                <i class="fa fa-basket-shopping"></i>
+                                            </a>
+                                        </div>  
+
+                                        <div class="main-border-button">
+                                            <a href="@Url.Action("BookMore", "Books", new {
                                                     @id = Model.books.Id,
-                                                    @title = Model.books.Title.ToString().Replace(" ", ""), 
+                                                    @title = Model.books.Title.ToString().Replace(" ", ""),
                                                     @firstN = Model.books.Author.FirstName.ToString().Replace(" ", ""),
                                                     @lastN = Model.books.Author.LastName.ToString().Replace(" ", "")})">Start Search book pdf files</a>
                                         </div>

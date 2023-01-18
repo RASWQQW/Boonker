@@ -7,8 +7,7 @@
         <div class="col-lg-12">
             <div class="heading-section">
                 @{
-                    if (Model.cats is not null)
-                    {
+                    if (Model.cats is not null){
                         <h4><em>Most Popular</em> @Model.cats.Name <em>Right Now</em></h4>
                     }
                     else{
@@ -29,12 +28,11 @@
                     }
                 </ul>
                 @{ if (Model.cats is not null)
-                    {
+                   {
                         <li style="padding-left:45px;">
                             <p>@Model.cats.DSCR</p>}
                         </li>
-
-                    }
+                   }
                 }
             </div>
             <div class="row">
@@ -50,16 +48,9 @@
                                     <li>@book.Price.ToString("c")</li>
                                     <li><i class="fa fa-download"></i> 2.3M</li>
                                 </ul>
-                                <div class="text-button accordion">
-                                    <a href="@Url.Action("Delete", "Books", new { @id = @book.Id })">Delete</a>
                                 </div>
-                                <div class="text-button accordion">
-                                    <a href="@Url.Action("UpdateBook", "Books", new { @id = @book.Id })">Update</a>
-                                </div>
-                            </div>
                         </div>
                     }
-
                 }
                 <div class="col-lg-12">
                     <div class="main-button">

@@ -1,4 +1,4 @@
-﻿    using Boonker.Data;
+﻿using Boonker.Data;
 using Boonker.Data.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -67,7 +67,6 @@ namespace Boonker.Controllers
                    }
                ).ToList();
 
-
             mainUser.currentUser = currentUser;
             mainUser.UserBooks = UserBooks;
             mainUser.Status = Status;
@@ -104,6 +103,7 @@ namespace Boonker.Controllers
         public void GainUser(int id, ref User ToUser, ref User IsUsers, ref List<Follows> Status){
             ToUser = context.User.FirstOrDefault(w => w.addId == id);
             var IsUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             IsUsers = context.User.FirstOrDefault(w => w.Id == IsUser);
             var tUser = ToUser.addId; var iUser = IsUsers.addId;
 
@@ -128,7 +128,6 @@ namespace Boonker.Controllers
             }
             else { return RedirectToAction("Index", "Home"); }
 
-            
         }
         [HttpPost]
         public IActionResult UserEdit(UserViewModel userMod)
@@ -150,6 +149,32 @@ namespace Boonker.Controllers
 
             return RedirectToAction("UserPage", "Home");
         }
+
+        [HttpGet][HttpPost]
+        public async Task<IActionResult> ChangePasswordAsync(UpdateViewModel model)
+        {
+            if(model == null) { return View(new UpdateViewModel()); }
+            else
+            {
+                var user = context.User.FirstOrDefault(
+                    w => w.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+                if (user.Password == model.CurrentPassword)
+                {
+                    if(model.NewPassword.Length > 8 && model.NewPassword.Any(x => !char.IsLetter(x)))
+                    {
+                        user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, model.NewPassword);
+                        var result = await _userManager.UpdateAsync(user);
+                        user.Password = model.NewPassword;
+                        user.PasswordCheck = model.NewPassword;
+                        context.SaveChanges();
+                        return RedirectToAction("UserPage", "Home");
+                    }
+                    return View(model);
+                }
+                return View(model);
+            }
+        } 
         
     }
 }

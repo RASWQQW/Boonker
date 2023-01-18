@@ -78,22 +78,16 @@
                                                             <li>@book.Price.ToString("c")</li>
                                                             <li><i class="fa fa-download"></i> 2.3M</li>
                                                         </ul>
-                                                        <div class="text-button accordion">
-                                                            <a href="@Url.Action("Delete", "Books", new { @id = @book.Id })">Delete</a>
-                                                        </div>
-                                                        <div class="text-button accordion">
-                                                            <a href="@Url.Action("UpdateBook", "Books", new { @id = @book.Id })">Update</a>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             }
 
                                         }
-                                        <div class="col-lg-12">
+                                        @*<div class="col-lg-12">
                                             <div class="main-button">
                                                 <a href="/Books/Charts/">Discover Popular</a>
                                             </div>
-                                        </div>
+                                        </div>*@
                                     </div>
                                     <div class="col-lg-12">
                                         <p>@Model.Author.DSCR</p>
