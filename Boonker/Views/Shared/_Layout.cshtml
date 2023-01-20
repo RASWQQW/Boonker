@@ -30,7 +30,7 @@ https://templatemo.com/tm-579-cyborg-gaming
 
 <body>
 
-<!-- ***** Preloader Start ***** -->
+    <!-- ***** Preloader Start ***** -->
     <div id="js-preloader" class="js-preloader">
         <div class="preloader-inner">
             <span class="dot"></span>
@@ -51,7 +51,7 @@ https://templatemo.com/tm-579-cyborg-gaming
 
                         <!-- ***** Logo Start ***** -->
                         <a href="https://localhost:44363/" class="logo">
-                            <img src="~/files/footages/image-removebg-preview (5).png"  alt="Boonker"/>
+                            <img src="~/files/footages/image-removebg-preview (5).png" alt="Boonker" />
                         </a>
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Search End ***** -->
@@ -71,8 +71,11 @@ https://templatemo.com/tm-579-cyborg-gaming
                             @{
                                 if (User.Identity.IsAuthenticated)
                                 {
-                                    <li><a style="margin-top:-15px" href="@Url.Action("UserBasket", "Basket", new { @username=User.Identity.Name})">
-                                        <img height="45" width="45" src="~/files/footages/output-onlinegiftools.gif"/></a></li>
+                                    <li>
+                                        <a style="margin-top:-15px" href="@Url.Action("UserBasket", "Basket", new { @username=User.Identity.Name})">
+                                            <img height="45" width="45" src="~/files/footages/output-onlinegiftools.gif" />
+                                        </a>
+                                    </li>
 
                                     <li><a href="https://localhost:44363/Home/UserPage">@User.Identity.Name</a></li>
                                     @*<img src="~/assets/images/profile-header.jpg" alt="">*@
@@ -80,9 +83,9 @@ https://templatemo.com/tm-579-cyborg-gaming
                                     {
 
                                         <div class="form-group">
-                                            <li><input class="btn btn-danger" type="submit" value="Log out" /></li>
-                                        </div>
-                                    }
+                                        <li><input class="btn btn-danger" type="submit" value="Log out" /></li>
+                            </div>
+                        }
 
                                 }
                                 else
@@ -98,8 +101,8 @@ https://templatemo.com/tm-579-cyborg-gaming
                             </a>
                             <!-- ***** Menu End ***** -->
                             </nav>
+                            </div>
                         </div>
-                    </div>
                     </div>
                 </header>
                 <!-- ***** Header Area End ***** -->
@@ -118,7 +121,10 @@ https://templatemo.com/tm-579-cyborg-gaming
                                         || soss == "UserPage"
                                         || (soss == "Index" && controller == "Search")
                                         || soss == "AuthorPage"
-                                        || soss == "MapShower"))
+                                        || soss == "MapShower"
+                                        || soss == "BookMore"
+                                        || soss == "UserBasket"))
+
                                     {
                                         <!-- ***** Banner Start ***** -->
                                         <div class="main-banner">
@@ -189,19 +195,22 @@ https://templatemo.com/tm-579-cyborg-gaming
                         </div>
                     </div>
                 </div>
-                <footer>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <p>
-                                    Copyright © 2022 <a href="#">Boonker Library</a> Company. All rights reserved.
+                @if (!(soss == "UserBasket"))
+                {
+                    <footer>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <p>
+                                        Copyright © 2022 <a href="#">Boonker Library</a> Company. All rights reserved.
 
-                                    <br>Design: <a href="https://templatemo.com" target="_blank" title="free CSS templates">TemplateMo</a>  Distributed By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                                </p>
+                                        <br>Design: <a href="https://templatemo.com" target="_blank" title="free CSS templates">TemplateMo</a>  Distributed By <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </footer>
+                    </footer>
+                }
 
 
                 <!-- Scripts -->
@@ -215,5 +224,5 @@ https://templatemo.com/tm-579-cyborg-gaming
                 <script src="~/assets/js/popup.js"></script>
                 <script src="~/assets/js/custom.js"></script>
 
-        </body>
+            </body>
     </html>

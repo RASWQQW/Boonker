@@ -27,7 +27,7 @@
             </div>
             <div class="owl-features owl-carousel">
                 @{
-                    foreach (var item in Model.RecBooks) 
+                    foreach (var item in Model.RecBooks)
                     {
                         <div class="item">
                             <div class="thumb">
@@ -46,7 +46,7 @@
                 }
             </div>
         </div>
-    </div> 
+    </div>
     <div class="col-lg-4">
         <div class="top-downloaded">
             <style>
@@ -60,14 +60,16 @@
             <ul>
                 @{ for (int item = 0; item < Model.AllCats.Count(); item++)
                     {
-        <li style=" height: 100%; margin: 0em; overflow-y: auto;">
-            @*<img src="~/assets/images/game-01.jpg" alt="" class="templatemo-item">*@
-            <h4>@Model.AllCats[item].Name</h4>
-            <h6>@Model.AllCats[item].DSCR</h6>
-            <span><i class="fa fa-eye" style="color: yellow;"></i>@Model.AllCats[item].CatViews</span>
-            <span><i class="fa fa-sort-amount-asc" style="color: #ec6090;"></i> @Model.CatAmount[item]</span>
+                        <li style=" height: 100%; margin: 0em; overflow-y: auto;">
+                            @*<img src="~/assets/images/game-01.jpg" alt="" class="templatemo-item">*@
+                            <h4>@Model.AllCats[item].Name</h4>
+                            <h6>@Model.AllCats[item].DSCR</h6>
+                            <span><i class="fa fa-eye" style="color: yellow;"></i>@Model.AllCats[item].CatViews</span>
+                            <span><i class="fa fa-sort-amount-asc" style="color: #ec6090;"></i> @Model.CatAmount[item]</span>
 
-        </li> } }
+                        </li>
+                    } 
+                }
             </ul>
             <div class="text-button">
                 <a href="/Books/List">View All Categories</a>
@@ -76,6 +78,7 @@
     </div>
 </div>
 <!-- ***** Featured Games End ***** -->
+
 <!-- ***** Start Stream Start ***** -->
 <div class="start-stream">
     <div class="col-lg-12">
@@ -119,6 +122,7 @@
     </div>
 </div>
 <!-- ***** Start Stream End ***** -->
+
 <!-- ***** Live Stream Start ***** -->
 <div class="live-stream">
     <div class="col-lg-12">
@@ -234,14 +238,8 @@
         </div>
     </div>
 </div>
+
 <!-- ***** Live Stream End ***** -->
-
-
-
-
-
-
-
 <!-- Scripts -->
 <!-- Bootstrap core JavaScript -->
 <script src="~/vendor/jquery/jquery.min.js"></script>

@@ -38,11 +38,6 @@ namespace Boonker.Controllers
                 .Include(w => w.Category)
                 .Include(c => c.Category).Where(w => w.Author.Id == AuthorId).Select(w => w.Category.Name).ToList();
 
-            foreach(var janre in Janres)
-            {
-                janre.GetType();
-            }
-
             List<Book> Books = context.Books
                 .Include(w => w.Category)
                 .Include(w=> w.Author)

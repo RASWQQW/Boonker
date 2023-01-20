@@ -11,6 +11,6 @@ namespace Boonker.Data.Models
         public User User { get; set; }
         public Book Book { get; set; }
         public String Review { get; set; }
-
+        public int AmountOf { get; set; }
     }
 }

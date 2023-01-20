@@ -33,11 +33,13 @@
                                     <li>User Role <span>@Model.currentUser.Role</span></li>
                                     <li>Fllowers<span>@Model.currentUser.Followers</span></li>
                                     <li>Books count <span>@Model.UserBooks.Count()</span></li>
-                                    <li> All Books
+                                    <li> All Books: 
                                         @{
                                             foreach (var book in Model.UserBooks)
                                             {
-                                                <span>@book.Title </span>
+                                                <span>
+                                                <a href="@Url.Action("Book", "Books", new { @id=book.Id })">
+                                                    @book.Title </a></span>
                                             } 
                                             }
                                     </li>

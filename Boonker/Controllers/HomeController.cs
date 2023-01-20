@@ -41,13 +41,13 @@ namespace Boonker.Controllers
             UserViewModel mainUser = new UserViewModel();
 
             User currentUser = null; List<Follows> Status = null;
-
-            if (id == 0 || id == null){
+            var id_s = context.User.FirstOrDefault(w => w.Id == User.FindFirstValue(ClaimTypes.NameIdentifier)).addId;
+            if (id == 0 || id == id_s){
                 currentUser = context.User.FirstOrDefault(
                     w => w.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
             }
             else{
-                currentUser = context.User.FirstOrDefault(
+                 currentUser = context.User.FirstOrDefault(
                     w => w.addId == id);
 
                 User IsUsers = null; User ToUser = null;
@@ -71,7 +71,7 @@ namespace Boonker.Controllers
             mainUser.UserBooks = UserBooks;
             mainUser.Status = Status;
 
-            return id == 0 ? View(mainUser) : View("UserPageA", mainUser);
+            return id == 0 || id == id_s ? View(mainUser) : View("UserPageA", mainUser);
         }
 
         [Route("Home/Follow/{id}")]
@@ -142,7 +142,6 @@ namespace Boonker.Controllers
             ChangeUser.About = userMod.currentUser.About;
             if(userMod.UserImage != null){
                 ChangeUser.Image = edit.UploadFile(Enviro, und: userMod.UserImage, fileN: null, option: "users");
-
             }
 
             context.SaveChanges();

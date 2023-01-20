@@ -3,15 +3,17 @@ using System;
 using Boonker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Boonker.Migrations
 {
     [DbContext(typeof(BooksAddData))]
-    partial class BooksAddDataModelSnapshot : ModelSnapshot
+    [Migration("20230120172111_sosss")]
+    partial class sosss
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,13 +58,13 @@ namespace Boonker.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
 
-                    b.Property<int>("AmountOf")
+                    b.Property<int>("Amount")
                         .HasColumnType("integer");
 
                     b.Property<int?>("BookId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Review")
+                    b.Property<string>("Sos")
                         .HasColumnType("text");
 
                     b.Property<string>("UserId")
