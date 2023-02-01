@@ -12,5 +12,6 @@ namespace Boonker.Data.Models
         public Book Book { get; set; }
         public String Review { get; set; }
         public int AmountOf { get; set; }
+        public string Date { get; set; } = DateTime.Now.ToString("F").ToString();
     }
 }

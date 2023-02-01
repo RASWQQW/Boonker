@@ -137,7 +137,8 @@ namespace Boonker.Controllers
 
             ExtraClasses edit = new ExtraClasses();
 
-            ChangeUser.UserName = userMod.currentUser.UserName;
+            ChangeUser.UserName = userMod.currentUser.UserName; 
+            ChangeUser.NormalizedUserName = userMod.currentUser.UserName.ToUpper(); // to save as upper name for setting both name same
             ChangeUser.Email = userMod.currentUser.Email;
             ChangeUser.About = userMod.currentUser.About;
             if(userMod.UserImage != null){

@@ -85,5 +85,15 @@ namespace Boonker.Controllers
             return View(sended);
 
         }
+
+        [Route("Author/AuthorList/")]
+        public ActionResult AuthorList()
+        {
+            var Authors = context.Authors.OrderByDescending(w => w.FirstName).ToList();
+
+            AuthorsView auth = new AuthorsView { Authors=Authors};
+
+             return View(auth);
+        }
     }
 }

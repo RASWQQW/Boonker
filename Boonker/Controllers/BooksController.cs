@@ -65,12 +65,16 @@ namespace Boonker.Controllers
             var simobj = context.Books.Include(w => w.Category).Include(w => w.ImgEntry).Include(w => w.Author)
                 .Where(w => w.Category == obj.Category).ToList();
 
+            // to check there is book in basket or not
+            var inbasketIs = context.Basket.Where(w => w.User.Id == User.FindFirstValue(ClaimTypes.NameIdentifier) && w.Book.Id == obj.Id).Any();
+
             simobj.Remove(obj);
 
             CommonViewModel common = new CommonViewModel();
 
             obj.Views = obj.Views + 1; obj.Category.CatViews = obj.Category.CatViews + 1;
 
+            common.InBasket = inbasketIs;
             common.books = obj;
             common.RecBooks = simobj;
             if (!(string.IsNullOrEmpty(title) && string.IsNullOrEmpty(firstN) && string.IsNullOrEmpty(lastN))

@@ -18,6 +18,6 @@ namespace Boonker.Data.Models
         public int UserId { get; set; }
         public User User { get; set; }
         public List<FoundObjects> ResultList { get; set; }
-        public DateTime Date { get; set; } = new DateTime().Date;
+        public string Date { get; set; } = DateTime.Now.ToString("F").ToString();
     }
 }

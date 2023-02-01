@@ -17,12 +17,12 @@
                             <li><a href="/Books/Book/@book.Book.Id"><span>@book.Book.Title</span></a></li>
                             <li><span>Price</span><h4>@book.Book.Price.ToString("c")</h4></li>
                             <li><span>Views</span><h4>@book.Book.Views</h4></li>
-                            <li><span>Date</span><h4>bla bla</h4></li>
+                            <li><span>Date</span><h4>@book.Date.ToString()</h4></li>
                             <li><span>Amount</span><h4>@book.AmountOf</h4></li>
-                            <li><span>Sum</span><h4>@book.AmountOf * @book.Book.Price </h4></li>
+                            <li><span>Sum</span><h4>@(@book.AmountOf * @book.Book.Price) </h4></li>
                             <li>
                                 <div class="form-group">
-                                    <a href="@Url.Action("DeleteGood", "Basket", new { @bookId=book.Id})" class="btn btn-danger">Delete</a>
+                                    <a href="@Url.Action("DeleteGood", "Basket", new { @bookId=@book.Book.Id})" class="btn btn-danger">Delete</a>
                                 </div>
                             </li>
                         </ul>

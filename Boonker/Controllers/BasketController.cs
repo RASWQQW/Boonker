@@ -49,8 +49,8 @@ namespace Boonker.Controllers
                 var s = id;
                 var book = context.Books.Include(w => w.Category).Include(w => w.Author).Include(w => w.ImgEntry).FirstOrDefault(w => w.Id == id);
 
-                Basket basket = new Basket();
 
+                Basket basket = new Basket();
                 basket.Book = book;
                 basket.AmountOf = context.Basket.FirstOrDefault(w => w.Book == book).AmountOf;
 
@@ -64,12 +64,12 @@ namespace Boonker.Controllers
 
         } 
 
-        [Route("Basket/DeleteGood/{bookId}")]
-        public ActionResult DeletGood(int bookId)
+        [Route("Basket/DeleteGood/{bookId?}")]
+        public ActionResult DeleteGood(int bookId)
         {
             var _delElem = context.Basket.FirstOrDefault(w => w.Book.Id == bookId);
             context.Basket.Remove(_delElem); context.SaveChanges();
-            return View("UserBasket");
+            return RedirectToAction("UserBasket", "Basket");
         }
     }
 }

@@ -62,12 +62,12 @@ https://templatemo.com/tm-579-cyborg-gaming
                             </form>
                         </div>
                         <!-- ***** Search End ***** -->
-                        <!-- ***** Menu Start ***** -->
+                        <!-- ***** Menu Start ***** --> 
                         <ul class="nav">
                             <li><a href="/Home/" class="active">Home</a></li>
-                            <li><a href="/Browse/">Browse</a></li>
-                            <li><a href="@Url.Action("MapShower", "Map")">Map</a></li>
-                            <li><a href="streams.html">Streams</a></li>
+                            <li><a href="/Browse/">Charts</a></li>
+                            <li><a href="@Url.Action("MapShower", "Map")"><img src="~/files/footages/markingofr.png" height="10"/></a>Map</li>
+                            <li><a href="@Url.Action("AuthorList", "Author")">Authors</a></li>
                             @{
                                 if (User.Identity.IsAuthenticated)
                                 {
@@ -85,7 +85,7 @@ https://templatemo.com/tm-579-cyborg-gaming
                                         <div class="form-group">
                                         <li><input class="btn btn-danger" type="submit" value="Log out" /></li>
                             </div>
-                        }
+                            }
 
                                 }
                                 else
@@ -98,6 +98,9 @@ https://templatemo.com/tm-579-cyborg-gaming
                             </ul>
                             <a class='menu-trigger'>
                                 <span>Menu</span>
+                            </a>
+                            <a>
+
                             </a>
                             <!-- ***** Menu End ***** -->
                             </nav>
